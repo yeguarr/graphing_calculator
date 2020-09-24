@@ -3,8 +3,10 @@ import java.awt.*;
 import java.awt.event.*;
 import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
+import java.text.DecimalFormat;
 import java.util.LinkedList;
 
+//Function interface
 interface Function {
     double calculate(double x);
     default Color getColor() {
@@ -12,6 +14,7 @@ interface Function {
     }
 }
 
+// Main component to draw axes and functions.
 public class GraphCoord extends JComponent implements ActionListener {
 
     int WIDTH = 500;
@@ -39,15 +42,18 @@ public class GraphCoord extends JComponent implements ActionListener {
         t.start();
     }
 
+    //method to add Functions to graph
     public void addFunction(Function fun) {
         functions.add(fun);
     }
 
-    private static String fmt(double d) {
-        if (d == (long) d)
-            return String.format("%d", (long) d);
-        else
-            return String.format("%s", d);
+    private String fmt(double d) {
+        StringBuilder stringBuilder = new StringBuilder("0.#");
+        for (int i = 0; i < (int)(Math.abs(Math.log10(scaleCount))); i++) {
+            stringBuilder.append('#');
+        }
+        DecimalFormat format = new DecimalFormat(stringBuilder.toString());
+        return format.format(d);
     }
 
     @Override
