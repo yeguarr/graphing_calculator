@@ -9,6 +9,7 @@ import java.util.LinkedList;
 //Function interface
 interface Function {
     double calculate(double x);
+
     default Color getColor() {
         return Color.getHSBColor((float) Math.abs(this.hashCode()) / Integer.MAX_VALUE, 1.f, 1.f);
     }
@@ -49,7 +50,7 @@ public class GraphCoord extends JComponent implements ActionListener {
 
     private String fmt(double d) {
         StringBuilder stringBuilder = new StringBuilder("0.#");
-        for (int i = 0; i < (int)(Math.abs(Math.log10(scaleCount))); i++) {
+        for (int i = 0; i < (int) (Math.abs(Math.log10(scaleCount))); i++) {
             stringBuilder.append('#');
         }
         DecimalFormat format = new DecimalFormat(stringBuilder.toString());
@@ -102,8 +103,8 @@ public class GraphCoord extends JComponent implements ActionListener {
 
         for (Function fun : functions) {
             g2d.setPaint(fun.getColor());
-            for (double i = -dX; i <= WIDTH - dX; i+=0.5) {
-                Line2D line2D = new Line2D.Double(i + dX,  -fun.calculate((i) / scale * scaleCount / GRID_SIZE) * GRID_SIZE / scaleCount * scale + dY,
+            for (double i = -dX; i <= WIDTH - dX; i += 0.5) {
+                Line2D line2D = new Line2D.Double(i + dX, -fun.calculate((i) / scale * scaleCount / GRID_SIZE) * GRID_SIZE / scaleCount * scale + dY,
                         i + 0.5 + dX, -fun.calculate((i + 0.5) / scale * scaleCount / GRID_SIZE) * GRID_SIZE / scaleCount * scale + dY);
                 g2d.draw(line2D);
             }
@@ -204,7 +205,7 @@ public class GraphCoord extends JComponent implements ActionListener {
                 dX = e.getX() - oldX * scale / scaleCount * GRID_SIZE;
                 dY = e.getY() - oldY * scale / scaleCount * GRID_SIZE;
             }
-            if(!lock) {
+            if (!lock) {
                 setX = dX;
                 setY = dY;
             }
